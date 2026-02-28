@@ -6,33 +6,41 @@
     <p>Xush kelibsiz, {{ request.user.username }} 👋</p>
 </div>
 
-<div class="row">
+<div class="row justify-content-center">
 
+    <!-- 7 kun -->
     <div class="col-md-4 mb-4">
         <div class="card p-4 text-center">
-            <h4>📚 Fanlar</h4>
-            <p class="display-6">{{ subjects_count }}</p>
+            <h5 class="mb-3">📅 Oxirgi 7 kun</h5>
+            <p class="display-4 fw-bold text-primary">{{ weekly }}</p>
+            <small class="text-muted">Ishlangan testlar</small>
         </div>
     </div>
 
+    <!-- 30 kun -->
     <div class="col-md-4 mb-4">
         <div class="card p-4 text-center">
-            <h4>📝 Savollar</h4>
-            <p class="display-6">{{ questions_count }}</p>
+            <h5 class="mb-3">📆 Oxirgi 30 kun</h5>
+            <p class="display-4 fw-bold text-success">{{ monthly }}</p>
+            <small class="text-muted">Ishlangan testlar</small>
         </div>
     </div>
 
+    <!-- 1 yil -->
     <div class="col-md-4 mb-4">
         <div class="card p-4 text-center">
-            <h4>🏆 Ishlangan Testlar</h4>
-            <p class="display-6">{{ attempts_count }}</p>
+            <h5 class="mb-3">📊 Oxirgi 1 yil</h5>
+            <p class="display-4 fw-bold text-danger">{{ yearly }}</p>
+            <small class="text-muted">Ishlangan testlar</small>
         </div>
     </div>
 
 </div>
 
 <div class="text-center mt-4">
-    <a href="/" class="btn btn-primary btn-lg">Test ishlash</a>
+    <a href="/" class="btn btn-primary btn-lg px-5">
+        Test ishlash
+    </a>
 </div>
 
 {% endblock %}

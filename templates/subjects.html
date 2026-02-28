@@ -11,7 +11,7 @@
     <div class="col-md-4 mb-4">
         <div class="card text-center p-4">
             <h4 class="mb-3">{{ subject.name }}</h4>
-            <a href="/subject/{{ subject.id }}/" class="btn btn-primary btn-custom">
+            <a href="{% url 'topics' subject.id %}" class="btn btn-primary btn-custom">
                 Mavzularni ko‘rish
             </a>
         </div>

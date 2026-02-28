@@ -2,29 +2,45 @@
 {% block content %}
 
 <div class="row justify-content-center">
-    <div class="col-md-5">
-        <div class="card p-5">
-            <h3 class="text-center mb-4">Ro‘yxatdan o‘tish</h3>
+    <div class="col-md-6">
+        <div class="card p-5 shadow-lg border-0">
 
-            {% if error %}
-            <div class="alert alert-danger">{{ error }}</div>
-            {% endif %}
+            <h3 class="text-center mb-4 fw-bold">
+                Ro‘yxatdan o‘tish ✨
+            </h3>
 
-            <form method="POST">
+            <form method="POST" novalidate>
                 {% csrf_token %}
-                <div class="mb-3">
-                    <input type="text" name="username" class="form-control" placeholder="Username" required>
-                </div>
-                <div class="mb-3">
-                    <input type="password" name="password" class="form-control" placeholder="Password" required>
-                </div>
-                <button class="btn btn-success w-100">Ro‘yxatdan o‘tish</button>
+
+                {% for field in form %}
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">
+                            {{ field.label }}
+                        </label>
+
+                        {{ field }}
+
+                        {% if field.errors %}
+                            <div class="text-danger small mt-1">
+                                {{ field.errors|striptags }}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+
+                <button type="submit" class="btn btn-success w-100 py-2 fw-semibold">
+                    Ro‘yxatdan o‘tish 🚀
+                </button>
+
             </form>
 
-            <p class="text-center mt-3">
-                Hisobingiz bormi? 
-                <a href="{% url 'login' %}">Login qilish</a>
-            </p>
+            <div class="text-center mt-3">
+                Hisobingiz bormi?
+                <a href="{% url 'login' %}" class="fw-semibold">
+                    Login qilish
+                </a>
+            </div>
+
         </div>
     </div>
 </div>

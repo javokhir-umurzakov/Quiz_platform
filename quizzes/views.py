@@ -6,43 +6,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
 from .models import Question, QuizSession
 from subjects.models import Topic
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.models import User
-from django.shortcuts import render, redirect
 
-def login_view(request):
-    if request.method == "POST":
-        username = request.POST['username']
-        password = request.POST['password']
-
-        user = authenticate(request, username=username, password=password)
-
-        if user:
-            login(request, user)
-            return redirect('subjects')
-        else:
-            return render(request, 'login.html', {'error': 'Login yoki parol noto‘g‘ri'})
-
-    return render(request, 'login.html')
-
-
-def register_view(request):
-    if request.method == "POST":
-        username = request.POST['username']
-        password = request.POST['password']
-
-        if User.objects.filter(username=username).exists():
-            return render(request, 'register.html', {'error': 'Username band'})
-
-        User.objects.create_user(username=username, password=password)
-        return redirect('login')
-
-    return render(request, 'register.html')
-
-
-def logout_view(request):
-    logout(request)
-    return redirect('login')
 
 @login_required
 def start_quiz(request, topic_id):
