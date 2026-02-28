@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+<!--<h1>Test natijasi</h1>-->
+
+<!--<p>To'g'ri javoblar: {{ session.score }}</p>-->
+<!--<p>Jami savollar: {{ session.total_questions }}</p>-->
+<!--<p>Foiz: {{ percent }} %</p>-->
+
+<!--<a href="/">Bosh sahifaga qaytish</a>-->
+
+
+
+{% block content %}
+
+<div class="card text-center p-5">
+    <h1 class="mb-4">Test natijasi</h1>
+
+    <h3>To‘g‘ri javoblar: {{ session.score }}</h3>
+    <h4>Jami savollar: {{ session.total_questions }}</h4>
+
+    <div class="progress my-4" style="height:25px;">
+        <div class="progress-bar bg-success"
+             role="progressbar"
+             style="width: {{ percent }}%;">
+            {{ percent|floatformat:1 }} %
+        </div>
+    </div>
+
+    <a href="/" class="btn btn-primary btn-custom mt-3">
+        Yangi test ishlash
+    </a>
+</div>
+
+{% endblock %}

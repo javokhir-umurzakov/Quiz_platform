@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+<!--<h2>{{ question.text }}</h2>-->
+
+<!--<button onclick="send('A')">{{ question.option_a }}</button>-->
+<!--<button onclick="send('B')">{{ question.option_b }}</button>-->
+<!--<button onclick="send('C')">{{ question.option_c }}</button>-->
+<!--<button onclick="send('D')">{{ question.option_d }}</button>-->
+
+<!--<script>-->
+<!--function send(option){-->
+<!--fetch("{% url 'check_answer' %}",{-->
+<!--    method:"POST",-->
+<!--    headers:{-->
+<!--        "X-CSRFToken":"{{ csrf_token }}",-->
+<!--        "Content-Type":"application/json"-->
+<!--    },-->
+<!--    body:JSON.stringify({-->
+<!--        "selected":option,-->
+<!--        "question_id":"{{ question.id }}"-->
+<!--    })-->
+<!--})-->
+<!--.then(res=>res.json())-->
+<!--.then(data=>{-->
+<!--    if(data.result){-->
+<!--        alert("To'g'ri ✅");-->
+<!--    }else{-->
+<!--        alert("Noto'g'ri ❌");-->
+<!--    }-->
+<!--    window.location.reload();-->
+<!--});-->
+<!--}-->
+<!--</script>-->
+
+{% block content %}
+
+<div class="card p-5">
+    <h4 class="mb-4">{{ question.text }}</h4>
+
+    <div class="d-grid gap-3">
+        <button class="btn btn-outline-primary btn-lg" onclick="send('A')">{{ question.option_a }}</button>
+        <button class="btn btn-outline-primary btn-lg" onclick="send('B')">{{ question.option_b }}</button>
+        <button class="btn btn-outline-primary btn-lg" onclick="send('C')">{{ question.option_c }}</button>
+        <button class="btn btn-outline-primary btn-lg" onclick="send('D')">{{ question.option_d }}</button>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="resultModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content text-center p-4">
+      <h3 id="modalText"></h3>
+    </div>
+  </div>
+</div>
+
+<script>
+function send(option){
+fetch("{% url 'check_answer' %}",{
+    method:"POST",
+    headers:{
+        "X-CSRFToken":"{{ csrf_token }}",
+        "Content-Type":"application/json"
+    },
+    body:JSON.stringify({
+        "selected":option,
+        "question_id":"{{ question.id }}"
+    })
+})
+.then(res=>res.json())
+.then(data=>{
+    let text = data.result ? "To'g'ri javob ✅" : "Noto'g'ri javob ❌";
+    document.getElementById("modalText").innerText = text;
+
+    let modal = new bootstrap.Modal(document.getElementById('resultModal'));
+    modal.show();
+
+    setTimeout(()=>{
+        window.location.reload();
+    },1500);
+});
+}
+</script>
+
+{% endblock %}

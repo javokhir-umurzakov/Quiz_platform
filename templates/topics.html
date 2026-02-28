@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="text-center text-white mb-5">
+    <h1 class="fw-bold">Mavzular</h1>
+    <p>Mavzuni tanlang va testni boshlang</p>
+</div>
+
+<div class="row">
+    {% for topic in topics %}
+    <div class="col-md-4 mb-4">
+        <div class="card text-center p-4">
+            <h5>{{ topic.name }}</h5>
+            <a href="/quiz/start/{{ topic.id }}/" class="btn btn-success btn-custom mt-3">
+                Testni boshlash
+            </a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}
