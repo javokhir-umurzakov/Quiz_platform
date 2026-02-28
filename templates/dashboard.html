@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="text-center text-white mb-5">
+    <h1 class="fw-bold">Dashboard</h1>
+    <p>Xush kelibsiz, {{ request.user.username }} 👋</p>
+</div>
+
+<div class="row">
+
+    <div class="col-md-4 mb-4">
+        <div class="card p-4 text-center">
+            <h4>📚 Fanlar</h4>
+            <p class="display-6">{{ subjects_count }}</p>
+        </div>
+    </div>
+
+    <div class="col-md-4 mb-4">
+        <div class="card p-4 text-center">
+            <h4>📝 Savollar</h4>
+            <p class="display-6">{{ questions_count }}</p>
+        </div>
+    </div>
+
+    <div class="col-md-4 mb-4">
+        <div class="card p-4 text-center">
+            <h4>🏆 Ishlangan Testlar</h4>
+            <p class="display-6">{{ attempts_count }}</p>
+        </div>
+    </div>
+
+</div>
+
+<div class="text-center mt-4">
+    <a href="/" class="btn btn-primary btn-lg">Test ishlash</a>
+</div>
+
+{% endblock %}

@@ -1,11 +1,50 @@
 import random
 import json
+
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
 from .models import Question, QuizSession
 from subjects.models import Topic
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
+from django.shortcuts import render, redirect
+
+def login_view(request):
+    if request.method == "POST":
+        username = request.POST['username']
+        password = request.POST['password']
+
+        user = authenticate(request, username=username, password=password)
+
+        if user:
+            login(request, user)
+            return redirect('subjects')
+        else:
+            return render(request, 'login.html', {'error': 'Login yoki parol noto‘g‘ri'})
+
+    return render(request, 'login.html')
 
 
+def register_view(request):
+    if request.method == "POST":
+        username = request.POST['username']
+        password = request.POST['password']
+
+        if User.objects.filter(username=username).exists():
+            return render(request, 'register.html', {'error': 'Username band'})
+
+        User.objects.create_user(username=username, password=password)
+        return redirect('login')
+
+    return render(request, 'register.html')
+
+
+def logout_view(request):
+    logout(request)
+    return redirect('login')
+
+@login_required
 def start_quiz(request, topic_id):
     topic = get_object_or_404(Topic, id=topic_id)
     questions = list(Question.objects.filter(topic=topic))
@@ -27,7 +66,7 @@ def start_quiz(request, topic_id):
 
     return redirect('quiz_question')
 
-
+@login_required
 def quiz_question(request):
     questions = request.session.get('questions')
     index = request.session.get('index')
@@ -39,7 +78,7 @@ def quiz_question(request):
 
     return render(request, 'question.html', {'question': question})
 
-
+@login_required
 def check_answer(request):
     data = json.loads(request.body)
     selected = data['selected']
@@ -60,7 +99,7 @@ def check_answer(request):
         "result": correct
     })
 
-
+@login_required
 def quiz_result(request):
     session = QuizSession.objects.get(id=request.session['quiz_id'])
     percent = (session.score / session.total_questions) * 100

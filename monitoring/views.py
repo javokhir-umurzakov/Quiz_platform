@@ -1,8 +1,10 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.utils import timezone
 from datetime import timedelta
 from quizzes.models import QuizSession
 
+@login_required
 def dashboard(request):
     now = timezone.now()
 
